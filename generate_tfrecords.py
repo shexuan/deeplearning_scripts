@@ -33,14 +33,18 @@ def _float_feature(value):
 
 def _make_example(filename, label):
     name = filename.split('/')[-1]
-    img_data = Image.open(filename)
-    img_data = img_data.tobytes()
+    img_data = tf.gfile.FastGFile(filename, 'rb').read()  # 这种方式更加节省内存
+    img = Image.open(filename)
+    width = img.width
+    height = img.height
     example = tf.train.Example(
         features=(tf.train.Features(
             feature={
                 'name': _bytes_feature(bytes(name, encoding='utf-8')),
                 'img_data': _bytes_feature(img_data),
-                'label': _int64_feature(label)
+                'label': _int64_feature(label),
+                'height': _int64_feature(height),
+                'width': _int64_feature(width)
             })))
     return example
 
