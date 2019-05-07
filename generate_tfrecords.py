@@ -85,13 +85,13 @@ def main():
     writer_args = []
     n = 1
     for i in range(0, len(train_data), train_num_per_tfrecord):
-        tfrec_name = FLAGS.outdir + '/train_' + str(n) + '_of_' + str(FLAGS.train_tfrecords_num)
+        tfrec_name = FLAGS.outdir + '/train_' + str(n) + '_of_' + str(FLAGS.train_tfrecords_num) + '.tfrecord'
         writer_args.append([tfrec_name, train_data[i:i + train_num_per_tfrecord]])
         n += 1
     if FLAGS.train_eval:
         n = 1
         for i in range(0, len(eval_data), eval_num_per_tfrecord):
-            tfrec_name = FLAGS.outdir + '/eval_' + str(n) + '_of_' + str(FLAGS.eval_tfrecords_num)
+            tfrec_name = FLAGS.outdir + '/eval_' + str(n) + '_of_' + str(FLAGS.eval_tfrecords_num) + '.tfrecord'
             writer_args.append([tfrec_name, eval_data[i:i + eval_num_per_tfrecord]])
             n += 1
     pool = mp.Pool(FLAGS.num_processes)
