@@ -185,7 +185,7 @@ def train():
         filename, img_data, labels = iterator.get_next()
     except tf.errors.OutOfRangeError:
         pass
-    labels = tf.one_hot(labels, 5)
+    labels = tf.one_hot(labels, FLAGS.num_classes)
     # different initialize method for different feedable dataset iterator
     training_iterator = training_dataset.make_one_shot_iterator()
     eval_iterator = eval_dataset.make_initializable_iterator()
