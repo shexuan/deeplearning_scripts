@@ -250,13 +250,13 @@ def train():
                                 tf.equal(tf.argmax(predictions, 1), tf.argmax(labels, 1)), tf.float32)
                             batch_preds = sess.run(correct_prediction,
                                                    feed_dict={'is_training:0': 0, handle: eval_handle})
-                            print('batch_preds:', batch_preds)
+                            #print('batch_preds:', batch_preds)
                             preds = np.append(preds, batch_preds)
-                            print('preds', preds)
+                            #print('preds', preds)
                             total_samples += 32
                     except tf.errors.OutOfRangeError:
                         duration_preds = time.time() - start_time
-                        print('preds shape:', preds.shape)
+                        #print('preds shape:', preds.shape)
                         avg_accuracy = preds.mean()
                         pred_results = ('{0}: step {1}, avg_accuracy = {2:.4f} (Total predictions ({3} samples) cost {4} seconds)')
                         print(pred_results.format(datetime.now(), step, avg_accuracy, total_samples, duration_preds))
