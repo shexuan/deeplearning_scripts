@@ -186,6 +186,10 @@ def train():
     except tf.errors.OutOfRangeError:
         pass
     labels = tf.one_hot(labels, FLAGS.num_classes)
+    # x = tf.placeholder_with_default(img_data,
+    #                                shape=[FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size, 3],
+    #                                name='x')
+    #y = tf.placeholder_with_default(labels, [FLAGS.batch_size], name='y')
     # different initialize method for different feedable dataset iterator
     training_iterator = training_dataset.make_one_shot_iterator()
     eval_iterator = eval_dataset.make_initializable_iterator()
