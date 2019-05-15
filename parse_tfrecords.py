@@ -102,9 +102,10 @@ def preprocess(tfrecords, batch_size=32, is_training=True, num_threads=4, epochs
         if is_training:
             dataset = dataset.apply(tf.contrib.data.shuffle_and_repeat(buffer_size=10000, count=epochs))
             #tf.data.experimental.shuffle_and_repeat(buffer_size=10000, count=epochs)
-            dataset = (dataset.map(flip_image, num_parallel_calls=num_threads)
-                       .map(distort_color, num_parallel_calls=num_threads)
-                       .map(crop_image, num_parallel_calls=num_threads)
+            dataset = (dataset
+                       #.map(flip_image, num_parallel_calls=num_threads)
+                       #.map(distort_color, num_parallel_calls=num_threads)
+                       #.map(crop_image, num_parallel_calls=num_threads)
                        .map(lambda *x: resize_image(*x, image_size=image_size),
                             num_parallel_calls=num_threads))
             dataset = dataset.batch(batch_size)  # tf 1.10以上才添加的参数
