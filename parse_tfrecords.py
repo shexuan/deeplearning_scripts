@@ -100,7 +100,7 @@ def preprocess(tfrecords, batch_size=32, is_training=True, num_threads=4, epochs
         dataset = tf.data.TFRecordDataset(tfrecords)
         dataset = dataset.map(_parse_tfrecord)
         if is_training:
-            dataset = dataset.apply(tf.contrib.data.shuffle_and_repeat(buffer_size=10000, count=epochs))
+            dataset = dataset.apply(tf.contrib.data.shuffle_and_repeat(buffer_size=batch_size*100, count=epochs))
             #tf.data.experimental.shuffle_and_repeat(buffer_size=10000, count=epochs)
             dataset = (dataset
                        #.map(flip_image, num_parallel_calls=num_threads)
@@ -115,7 +115,7 @@ def preprocess(tfrecords, batch_size=32, is_training=True, num_threads=4, epochs
             dataset = dataset.map(lambda *x: resize_image(*x, image_size=image_size),
                                   num_parallel_calls=num_threads)
             dataset = dataset.batch(batch_size)  # 这时候不能使用drop_remainder=True，因为预测用到了所有图片
-            dataset = dataset.prefetch(1)
+            dataset = dataset.prefetch(batch_size)
         #iterator = dataset.make_one_shot_iterator()
         # iterator = dataset.make_initializable_iterator()
         return dataset
